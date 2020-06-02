@@ -10,6 +10,7 @@ import com.handypawan.mvvmexampleproject.databinding.ActivityLoginBinding
 import com.handypawan.mvvmexampleproject.utils.toast
 
 class LoginActivity : AppCompatActivity(), AuthListner {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
