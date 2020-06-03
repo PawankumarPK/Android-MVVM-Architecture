@@ -17,6 +17,8 @@ class UserRepository {
 
         val loginResponse = MutableLiveData<String>()
 
+        /**this is a bad practise because we cannot get instance of another class in a class,
+        So we need to dependency injection*/
         MyApi().userLogin(email, password).enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 loginResponse.value = t.message

@@ -23,7 +23,6 @@ class AuthViewModel : ViewModel() {
 
         /**this is a bad practise because we cannot get instance of another class in a class,
          So we need to dependency injection*/
-
         val loginResponse = UserRepository().userLogin(email!!, password!!)
         authListner?.onSuccess(loginResponse)
     }
