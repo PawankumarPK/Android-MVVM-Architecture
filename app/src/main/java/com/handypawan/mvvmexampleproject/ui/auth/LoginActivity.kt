@@ -18,7 +18,8 @@ class LoginActivity : AppCompatActivity(), AuthListner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding : ActivityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
+        val binding: ActivityLoginBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_login)
         val viewModel = ViewModelProviders.of(this).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
@@ -29,7 +30,6 @@ class LoginActivity : AppCompatActivity(), AuthListner {
     override fun onStarted() {
         toast("Login Started")
         progress_bar.show()
-
     }
 
     override fun onSuccess(loginResponse: LiveData<String>) {
@@ -37,8 +37,6 @@ class LoginActivity : AppCompatActivity(), AuthListner {
             progress_bar.hide()
             toast(it)
         })
-
-
     }
 
     override fun onFailed(message: String) {
