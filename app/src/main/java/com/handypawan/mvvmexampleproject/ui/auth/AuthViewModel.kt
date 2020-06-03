@@ -1,8 +1,10 @@
 package com.handypawan.mvvmexampleproject.ui.auth
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.handypawan.mvvmexampleproject.data.repositories.UserRepository
+import com.handypawan.mvvmexampleproject.utils.ApiExceptions
 import com.handypawan.mvvmexampleproject.utils.Coroutines
 
 /**
@@ -26,11 +28,16 @@ class AuthViewModel : ViewModel() {
         So we need to dependency injection*/
 
         Coroutines.main {
-            val response = UserRepository().userLogin(email!!, password!!)
-            if (response.isSuccessful){
-                authListner?.onSuccess(response.body()?.user!!)
-            }else{
-                authListner?.onFailed("Error Code: ${response.code()}")
+            try {
+                val authResponse = UserRepository().userLogin(email!!, password!!)
+                //check User is not null
+                authResponse.user?.let {
+                    authListner?.onSuccess(it)
+                    return@main
+                }
+                authListner?.onFailed(authResponse.message!!)
+            } catch (e: ApiExceptions) {
+                authListner?.onFailed(e.message!!)
             }
         }
     }
