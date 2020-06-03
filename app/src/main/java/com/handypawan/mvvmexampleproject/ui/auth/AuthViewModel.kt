@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.handypawan.mvvmexampleproject.data.repositories.UserRepository
 import com.handypawan.mvvmexampleproject.utils.ApiExceptions
 import com.handypawan.mvvmexampleproject.utils.Coroutines
+import com.handypawan.mvvmexampleproject.utils.NoInternetException
 
 /**
  * Created by pawan on 02,June,2020
@@ -39,6 +40,8 @@ class AuthViewModel(private val repository : UserRepository) : ViewModel() {
                 }
                 authListner?.onFailed(authResponse.message!!)
             } catch (e: ApiExceptions) {
+                authListner?.onFailed(e.message!!)
+            }catch (e : NoInternetException){
                 authListner?.onFailed(e.message!!)
             }
         }

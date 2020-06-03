@@ -11,6 +11,7 @@ import com.handypawan.mvvmexampleproject.R
 import com.handypawan.mvvmexampleproject.data.db.AppDatabase
 import com.handypawan.mvvmexampleproject.data.db.entities.User
 import com.handypawan.mvvmexampleproject.data.network.MyApi
+import com.handypawan.mvvmexampleproject.data.network.NetworkConnectionIntercepter
 import com.handypawan.mvvmexampleproject.data.repositories.UserRepository
 import com.handypawan.mvvmexampleproject.databinding.ActivityLoginBinding
 import com.handypawan.mvvmexampleproject.ui.home.HomeActivity
@@ -25,7 +26,8 @@ class LoginActivity : AppCompatActivity(), AuthListner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val api = MyApi()
+        val networkConnectionIntercepter = NetworkConnectionIntercepter(this)
+        val api = MyApi(networkConnectionIntercepter)
         val db = AppDatabase(this)
         val respository = UserRepository(api, db)
         val factory = AuthViewModelFactory(respository)
@@ -40,7 +42,7 @@ class LoginActivity : AppCompatActivity(), AuthListner {
         viewModel.getLoggedInUser().observe(this, Observer { user ->
             if (user != null){
                 Intent(this,HomeActivity::class.java).also {
-                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    //it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(it)
                 }
             }
