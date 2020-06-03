@@ -1,36 +1,32 @@
 package com.handypawan.mvvmexampleproject.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.handypawan.mvvmexampleproject.R
-import com.handypawan.mvvmexampleproject.data.db.AppDatabase
 import com.handypawan.mvvmexampleproject.data.db.entities.User
-import com.handypawan.mvvmexampleproject.data.network.MyApi
-import com.handypawan.mvvmexampleproject.data.network.NetworkConnectionIntercepter
-import com.handypawan.mvvmexampleproject.data.repositories.UserRepository
 import com.handypawan.mvvmexampleproject.databinding.ActivityLoginBinding
 import com.handypawan.mvvmexampleproject.ui.home.HomeActivity
 import com.handypawan.mvvmexampleproject.utils.hide
 import com.handypawan.mvvmexampleproject.utils.show
 import com.handypawan.mvvmexampleproject.utils.snackbar
-import com.handypawan.mvvmexampleproject.utils.toast
 import kotlinx.android.synthetic.main.activity_login.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class LoginActivity : AppCompatActivity(), AuthListner {
+
+class LoginActivity : AppCompatActivity(), AuthListner, KodeinAware {
+
+    override val kodein by kodein()
+    private val factory: AuthViewModelFactory by instance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val networkConnectionIntercepter = NetworkConnectionIntercepter(this)
-        val api = MyApi(networkConnectionIntercepter)
-        val db = AppDatabase(this)
-        val respository = UserRepository(api, db)
-        val factory = AuthViewModelFactory(respository)
 
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
@@ -40,8 +36,8 @@ class LoginActivity : AppCompatActivity(), AuthListner {
         viewModel.authListner = this
 
         viewModel.getLoggedInUser().observe(this, Observer { user ->
-            if (user != null){
-                Intent(this,HomeActivity::class.java).also {
+            if (user != null) {
+                Intent(this, HomeActivity::class.java).also {
                     //it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(it)
                 }
@@ -56,7 +52,7 @@ class LoginActivity : AppCompatActivity(), AuthListner {
     }
 
     override fun onSuccess(user: User) {
-       // root_layout.snackbar("${user.name} is logged In")
+        // root_layout.snackbar("${user.name} is logged In")
         progress_bar.hide()
     }
 
@@ -65,4 +61,5 @@ class LoginActivity : AppCompatActivity(), AuthListner {
         root_layout.snackbar(message)
 
     }
+
 }
