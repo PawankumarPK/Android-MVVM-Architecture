@@ -1,11 +1,7 @@
 package com.handypawan.mvvmexampleproject.data.repositories
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.handypawan.mvvmexampleproject.data.network.MyApi
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
+import com.handypawan.mvvmexampleproject.data.network.responses.AuthResponse
 import retrofit2.Response
 
 /**
@@ -13,24 +9,9 @@ import retrofit2.Response
  */
 class UserRepository {
 
-    fun userLogin(email: String, password: String): LiveData<String> {
-
-        val loginResponse = MutableLiveData<String>()
-
-        /**this is a bad practise because we cannot get instance of another class in a class,
-        So we need to dependency injection*/
-        MyApi().userLogin(email, password).enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                loginResponse.value = t.message
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful)
-                    loginResponse.value = response.body().toString()
-                else
-                    loginResponse.value = response.errorBody().toString()
-            }
-        })
-        return loginResponse
+    /**Only from coroutine or another suspend fun*/
+    suspend fun userLogin(email: String, password: String): Response<AuthResponse> {
+        return MyApi().userLogin(email, password)
     }
+
 }
