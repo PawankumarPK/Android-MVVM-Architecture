@@ -10,7 +10,7 @@ import com.handypawan.mvvmexampleproject.utils.NoInternetException
 /**
  * Created by pawan on 02,June,2020
  */
-class AuthViewModel(private val repository : UserRepository) : ViewModel() {
+class AuthViewModel(private val repository: UserRepository) : ViewModel() {
 
     var email: String? = null
     var password: String? = null
@@ -41,7 +41,7 @@ class AuthViewModel(private val repository : UserRepository) : ViewModel() {
                 authListner?.onFailed(authResponse.message!!)
             } catch (e: ApiExceptions) {
                 authListner?.onFailed(e.message!!)
-            }catch (e : NoInternetException){
+            } catch (e: NoInternetException) {
                 authListner?.onFailed(e.message!!)
             }
         }

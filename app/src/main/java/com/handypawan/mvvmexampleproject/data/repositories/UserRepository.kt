@@ -9,7 +9,7 @@ import com.handypawan.mvvmexampleproject.data.network.responses.AuthResponse
 /**
  * Created by pawan on 03,June,2020
  */
-class UserRepository(private val api : MyApi, private val db : AppDatabase) : SafeApiRequest() {
+class UserRepository(private val api: MyApi, private val db: AppDatabase) : SafeApiRequest() {
 
     /**Only from coroutine or another suspend fun*/
     suspend fun userLogin(email: String, password: String): AuthResponse {
@@ -17,7 +17,7 @@ class UserRepository(private val api : MyApi, private val db : AppDatabase) : Sa
 
     }
 
-    suspend fun saveUser(user : User) = db.getUserDao().upsert(user)
+    suspend fun saveUser(user: User) = db.getUserDao().upsert(user)
 
     fun getUser() = db.getUserDao().getUser()
 }

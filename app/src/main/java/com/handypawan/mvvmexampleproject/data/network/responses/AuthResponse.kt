@@ -1,6 +1,5 @@
 package com.handypawan.mvvmexampleproject.data.network.responses
 
-import com.handypawan.mvvmexampleproject.data.db.UserDao
 import com.handypawan.mvvmexampleproject.data.db.entities.User
 
 /**
@@ -9,7 +8,7 @@ import com.handypawan.mvvmexampleproject.data.db.entities.User
 
 //To store JSON response
 data class AuthResponse(
-    val isSuccessful : Boolean?,
+    val isSuccessful: Boolean?,
     val message: String?,
     val user: User?
 
