@@ -19,13 +19,13 @@ import org.kodein.di.generic.singleton
  */
 class MVVMApplication : Application(), KodeinAware {
     override val kodein = Kodein.lazy {
-        import(androidXModule(this@MVVMApplication ))
+        import(androidXModule(this@MVVMApplication))
 
         bind() from singleton { NetworkConnectionIntercepter(instance()) }
         bind() from singleton { MyApi(instance()) }
         bind() from singleton { AppDatabase(instance()) }
-        bind() from singleton { UserRepository(instance(),instance()) }
+        bind() from singleton { UserRepository(instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
 
-        }
+    }
 }
