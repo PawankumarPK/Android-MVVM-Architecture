@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.handypawan.mvvmexampleproject.R
 import com.handypawan.mvvmexampleproject.data.db.entities.User
 import com.handypawan.mvvmexampleproject.databinding.ActivityLoginBinding
@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity(), AuthListner, KodeinAware {
 
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
-        val viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
+        val viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
         viewModel.authListner = this
