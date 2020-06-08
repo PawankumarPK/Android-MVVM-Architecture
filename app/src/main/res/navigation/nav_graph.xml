@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/profile">
+    app:startDestination="@id/profileFragment">
 
     <fragment
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment"
         android:name="com.handypawan.mvvmexampleproject.ui.home.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/profile_fragment" />

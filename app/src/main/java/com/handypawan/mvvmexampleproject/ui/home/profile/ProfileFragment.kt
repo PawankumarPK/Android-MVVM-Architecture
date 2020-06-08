@@ -19,7 +19,7 @@ class ProfileFragment : Fragment(), KodeinAware {
     override val kodein: Kodein by kodein()
 
     private lateinit var viewModel: ProfileViewModel
-    private val factory: ProfileViewModelFactory by instance()
+    private val factory: ProfileViewModelFactory by instance<ProfileViewModelFactory>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding: ProfileFragmentBinding =
