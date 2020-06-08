@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/profile"
-        android:name="com.handypawan.mvvmexampleproject.ui.home.profile.Profile"
+        android:name="com.handypawan.mvvmexampleproject.ui.home.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/profile_fragment" />
 </navigation>
