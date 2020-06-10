@@ -40,5 +40,4 @@ class QuotesFragment : Fragment(),KodeinAware {
             })
         }
     }
-
 }
