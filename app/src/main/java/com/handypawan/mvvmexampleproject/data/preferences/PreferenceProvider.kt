@@ -2,7 +2,7 @@ package com.handypawan.mvvmexampleproject.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 /**
  * Created by pawan on 10,June,2020
