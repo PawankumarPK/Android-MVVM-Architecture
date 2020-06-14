@@ -35,8 +35,6 @@ class SignupActivity : AppCompatActivity(),AuthListner, KodeinAware {
         val viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
-        viewModel.authListner = this
-
         viewModel.getLoggedInUser().observe(this, Observer { user ->
             if (user != null) {
                 Intent(this, HomeActivity::class.java).also {

@@ -74,8 +74,7 @@
                     android:drawablePadding="16dp"
                     android:hint="pawan@gmail.com"
                     android:inputType="textEmailAddress"
-                    android:padding="12dp"
-                    android:text="@={viewmodel.email}" />
+                    android:padding="12dp" />
 
                 <EditText
                     android:id="@+id/edit_text_password"
@@ -88,8 +87,7 @@
                     android:drawablePadding="16dp"
                     android:hint="password"
                     android:inputType="textPassword"
-                    android:padding="12dp"
-                    android:text="@={viewmodel.password}" />
+                    android:padding="12dp" />
 
                 <TextView
                     android:id="@+id/text_view_forget_password"
@@ -105,7 +103,6 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="@{viewmodel::onLoginButtonClick}"
                     android:text="Sign In"
                     android:textAllCaps="false" />
 
@@ -122,8 +119,7 @@
                 android:text="Don't have an account?\nSign Up Here"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/colorPrimary"
-                android:onClick="@{viewmodel::onSignup}"/>
+                android:textColor="@color/colorPrimary" />
 
         </RelativeLayout>
 
