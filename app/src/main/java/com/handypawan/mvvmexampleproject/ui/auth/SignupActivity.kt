@@ -7,32 +7,34 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import com.handypawan.mvvmexampleproject.R
 import com.handypawan.mvvmexampleproject.data.db.entities.User
 import com.handypawan.mvvmexampleproject.databinding.ActivityLoginBinding
 import com.handypawan.mvvmexampleproject.databinding.ActivitySignUpBinding
 import com.handypawan.mvvmexampleproject.ui.home.HomeActivity
-import com.handypawan.mvvmexampleproject.utils.hide
-import com.handypawan.mvvmexampleproject.utils.show
-import com.handypawan.mvvmexampleproject.utils.snackbar
+import com.handypawan.mvvmexampleproject.utils.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.progress_bar
+import kotlinx.coroutines.launch
 import okhttp3.internal.Internal.instance
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class SignupActivity : AppCompatActivity(),AuthListner, KodeinAware {
+class SignupActivity : AppCompatActivity(), KodeinAware {
 
     override val kodein by kodein()
     private val factory: AuthViewModelFactory by instance<AuthViewModelFactory>()
 
+    private lateinit var binding: ActivitySignUpBinding
+    private lateinit var viewModel: AuthViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivitySignUpBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
-        val viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
+        viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
         viewModel.getLoggedInUser().observe(this, Observer { user ->
@@ -44,22 +46,34 @@ class SignupActivity : AppCompatActivity(),AuthListner, KodeinAware {
             }
         })
 
+        binding.buttonSignUp.setOnClickListener {
+            userSignup()
+        }
+
     }
 
-    override fun onStarted() {
-        // toast("Login Started")
-        progress_bar.show()
-    }
+    private fun userSignup() {
+        val name = binding.editTextName.text.toString().trim()
+        val email = binding.editTextEmail.text.toString().trim()
+        val password = binding.editTextPassword.text.toString().trim()
+        val password1 = binding.editTextPasswordConfirm.text.toString().trim()
 
-    override fun onSuccess(user: User) {
-        // root_layout.snackbar("${user.name} is logged In")
-        progress_bar.hide()
-    }
+        lifecycleScope.launch {
+            try {
+                val authResponse = viewModel.userSignup(name,email, password)
+                if (authResponse.user != null) {
+                    viewModel.saveLoggedInUser(authResponse.user)
+                } else {
+                    binding.rootLayout.snackbar(authResponse.message!!)
+                }
+            } catch (e: ApiExceptions) {
+                e.stackTrace
 
-    override fun onFailed(message: String) {
-        progress_bar.hide()
-        root_layout.snackbar(message)
+            } catch (e: NoInternetException) {
+                e.stackTrace
 
+            }
+        }
     }
 
 }

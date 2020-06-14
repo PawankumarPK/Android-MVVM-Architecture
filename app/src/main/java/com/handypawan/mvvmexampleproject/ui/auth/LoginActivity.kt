@@ -48,6 +48,10 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         binding.buttonSignIn.setOnClickListener {
             loginUser()
         }
+        binding.textViewSignUp.setOnClickListener {
+            startActivity(Intent(this, SignupActivity::class.java))
+
+        }
     }
 
     private fun loginUser() {
