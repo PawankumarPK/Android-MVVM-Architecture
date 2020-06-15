@@ -5,20 +5,18 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.handypawan.mvvmexampleproject.R
-import com.handypawan.mvvmexampleproject.data.db.entities.User
 import com.handypawan.mvvmexampleproject.databinding.ActivityLoginBinding
 import com.handypawan.mvvmexampleproject.ui.home.HomeActivity
-import com.handypawan.mvvmexampleproject.utils.*
-import kotlinx.android.synthetic.main.activity_login.*
+import com.handypawan.mvvmexampleproject.utils.ApiExceptions
+import com.handypawan.mvvmexampleproject.utils.NoInternetException
+import com.handypawan.mvvmexampleproject.utils.snackbar
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
-import java.lang.Exception
 
 
 class LoginActivity : AppCompatActivity(), KodeinAware {
